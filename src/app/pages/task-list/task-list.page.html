@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Task List</ion-title>
+  </ion-toolbar>
+</ion-header>
+<!-- Each list has its own header -->
+<ion-content [fullscreen]="true">
+  <ion-header class="ion-no-border" [translucent]="true">
+    <ion-toolbar color="secondary">
+      <ion-title>
+        Incomplete
+      </ion-title>
+    </ion-toolbar>
+    <!-- List of incomplete tasks -->
+    <ion-list>
+      <div *ngFor="let task of taskList; let i = index">
+        <ion-item-sliding (ionSwipe)="deleteTask(i)">
+          <ion-item *ngIf="task.completed == false">
+            <ion-label>{{task.title}}</ion-label>
+            <ion-checkbox color="tertiary" [(ngModel)]="task.completed" (ionFocus)="updateTask(i)"></ion-checkbox>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="danger">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+    </ion-list>
+  </ion-header>
+
+  <!-- Each list has its own header -->
+  <ion-header class="ion-no-border" [translucent]="true">
+    <ion-toolbar color="secondary">
+      <ion-title>
+        Complete
+      </ion-title>
+    </ion-toolbar>
+
+    <!-- List of complete tasks -->
+    <ion-list>
+      <div *ngFor="let task of taskList; let i = index">
+        <ion-item-sliding (ionSwipe)="deleteTask(i)">
+          <ion-item *ngIf="task.completed == true">
+            <ion-label>{{task.title}}</ion-label>
+            <ion-checkbox color="tertiary" [(ngModel)]="task.completed" (ionFocus)="updateTask(i)" (ionDrag)="deleteTask(i)"></ion-checkbox>
+          </ion-item>
+          <ion-item-options side="end">
+            <ion-item-option color="danger">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+          </ion-item-options>
+        </ion-item-sliding>
+      </div>
+    </ion-list>
+  </ion-header>
+
+  <!-- fab for new task creation placed to the bottom end -->
+  <ion-fab vertical="bottom" horizontal="end">
+    <ion-fab-button color="success" (click)="newTask()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
